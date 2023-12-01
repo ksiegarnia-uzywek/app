@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "662404638793",
+    "project_id": "ksiegarniauzywek",
+    "storage_bucket": "ksiegarniauzywek.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662404638793:android:e44a1a0281b190d844b798",
+        "android_client_info": {
+          "package_name": "com.ksiegarniauzywek"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3mgbZriLd9tV6bS6UGqJ4low1NJu2868"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
