@@ -6,7 +6,7 @@
  */
 
 import type {PropsWithChildren} from 'react';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -16,6 +16,8 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+
+import functions from '@react-native-firebase/functions';
 
 import {
   Colors,
@@ -61,6 +63,13 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  useEffect(() => {
+    functions()
+      .httpsCallable('onCallGPT')({isbn: '9783886808861'})
+      .then(response => console.log(response))
+      .catch(error => console.error('Błąd funkcji:', error));
+  });
 
   return (
     <SafeAreaView style={backgroundStyle}>
