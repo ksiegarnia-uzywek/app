@@ -2,6 +2,8 @@ import {https, logger} from 'firebase-functions/v1';
 import {CallableRequest, onCall} from 'firebase-functions/v2/https';
 import {setGlobalOptions} from 'firebase-functions/v2/options';
 import OpenAI from 'openai';
+import {fetchBookDetails} from '../utils/fetchBookDetails';
+import {fetchBookPrices} from '../utils/fetchBookPrices';
 import {sendMessageToGPT} from '../utils/sendMessageToGPT';
 
 setGlobalOptions({maxInstances: 10});
@@ -16,6 +18,11 @@ const openai = new OpenAI({
 
 export const onCallGPT = onCall(async (request: CallableRequest<ISBN>) => {
   logger.debug(request.data.isbn);
+  const bookInfo = await fetchBookDetails(request.data.isbn);
+  logger.info(bookInfo.book.title);
+  const bookPrices = await fetchBookPrices(bookInfo.book.title);
+  logger.debug(bookInfo);
+  logger.debug(bookPrices.shoppingscraper.results.slice(0, 10));
   try {
     const message = `
     Wczuj się w asystenta księgarni używanych książek.
@@ -34,6 +41,8 @@ export const onCallGPT = onCall(async (request: CallableRequest<ISBN>) => {
 
     więc zaczynajmy:
     isbn: ${request.data.isbn} stan bardzo dobry
+    dodatkowe dane o ksiące: ${JSON.stringify(bookInfo)}
+    ${JSON.stringify(bookPrices.shoppingscraper.results.slice(0, 10))}  
 `;
     const response = await sendMessageToGPT(openai, message);
 
@@ -44,7 +53,10 @@ export const onCallGPT = onCall(async (request: CallableRequest<ISBN>) => {
     }
 
     logger.info(gptResponse);
-    return {response: gptResponse};
+    return {
+      response: gptResponse,
+      data: {bookInfo: bookInfo, prices: bookPrices},
+    };
   } catch (error) {
     logger.error('Błąd w trakcie połączenia z ChatGPT API', error);
     throw new https.HttpsError(
