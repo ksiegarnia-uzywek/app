@@ -13,7 +13,7 @@ interface ISBN {
 }
 
 const openai = new OpenAI({
-  apiKey: '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',
+  apiKey: '<klucz api>',
 });
 
 export const onCallGPT = onCall(async (request: CallableRequest<ISBN>) => {

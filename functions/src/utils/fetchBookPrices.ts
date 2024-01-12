@@ -1,5 +1,5 @@
 export async function fetchBookPrices(keyword: string) {
-  const apiKey = '81fc6a4d62b34049b77dc8e61a4b4724';
+  const apiKey = '<klucz api>';
   const url = `https://api.shoppingscraper.com/search/googleshopping/pl/?keyword=${encodeURIComponent(
     keyword,
   )}&api_key=${apiKey}&page=1&limit=10`;

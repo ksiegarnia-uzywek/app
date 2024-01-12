@@ -8,7 +8,7 @@ export async function fetchBookDetails(isbn: string) {
   const url = `https://api2.isbndb.com/book/${isbn}?with_prices=1`;
   const headers = {
     accept: 'application/json',
-    Authorization: '51318_3461609dd6b507113630e549dfc56f8c',
+    Authorization: '<klucz api>',
   };
 
   try {
